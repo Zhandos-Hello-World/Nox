@@ -42,6 +42,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.kotlinx.coroutinesCore)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
