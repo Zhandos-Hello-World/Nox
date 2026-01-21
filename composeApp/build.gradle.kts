@@ -43,6 +43,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.kotlinx.coroutinesCore)
+//            implementation(project(":domain"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
