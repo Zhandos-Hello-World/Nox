@@ -41,6 +41,7 @@ kotlin {
             baseName = xcfName
         }
     }
+    jvm()
 
     // Source set declarations.
     // Declaring a target automatically creates a source set with the same name. By default, the

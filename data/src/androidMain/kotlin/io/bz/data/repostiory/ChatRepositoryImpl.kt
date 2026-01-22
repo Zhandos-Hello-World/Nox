@@ -1,6 +1,6 @@
 package io.bz.data.repostiory
 
-import io.bz.data.TdClientManager
+import io.bz.data.lib.TdClientManager
 import io.bz.data.core.tdLibUnitCall
 import io.bz.data.lib.TdApi
 import io.bz.domain.core.DomainResult

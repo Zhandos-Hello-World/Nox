@@ -1,7 +1,5 @@
-package io.bz.data
+package io.bz.data.lib
 
-import io.bz.data.lib.Client
-import io.bz.data.lib.TdApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
@@ -16,6 +14,10 @@ class TdClientManager {
         null,
         null,
     )
+
+    fun <T : TdApi.Object> send(request: TdApi.Function<T>, resultHandler: Client.ResultHandler) {
+        client.send(request, resultHandler)
+    }
 
     fun recreateClient() {
         //TODO: implement

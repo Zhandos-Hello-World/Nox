@@ -14,11 +14,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModel
 import org.jetbrains.compose.resources.painterResource
 
 import nox.composeapp.generated.resources.Res
 import nox.composeapp.generated.resources.compose_multiplatform
 
+class vm: ViewModel() {
+    val value = 243
+}
 @Composable
 @Preview
 fun App() {
@@ -32,7 +36,7 @@ fun App() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
+                Text("Click me!${vm().value}")
             }
             AnimatedVisibility(showContent) {
                 val greeting = remember { Greeting().greet() }

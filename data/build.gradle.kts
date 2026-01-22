@@ -42,6 +42,8 @@ kotlin {
         }
     }
 
+    jvm()
+
     // Source set declarations.
     // Declaring a target automatically creates a source set with the same name. By default, the
     // Kotlin Gradle Plugin creates additional source sets that depend on each other, since it is
@@ -50,10 +52,13 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation(project(":domain"))
+
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.kotlinx.coroutinesCore)
-                // Add KMP dependencies here
-                implementation(project(":domain"))
+
+                //DI
+                implementation(libs.koin.core)
             }
         }
 
@@ -65,6 +70,7 @@ kotlin {
 
         androidMain {
             dependencies {
+                implementation(libs.androidx.annotation)
                 // Add Android-specific dependencies here. Note that this source set depends on
                 // commonMain by default and will correctly pull the Android artifacts of any KMP
                 // dependencies declared in commonMain.
