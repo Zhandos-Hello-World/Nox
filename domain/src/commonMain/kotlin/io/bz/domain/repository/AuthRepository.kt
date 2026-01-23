@@ -2,8 +2,11 @@ package io.bz.domain.repository
 
 import io.bz.domain.core.DomainResult
 import io.bz.domain.interactors.auth.AuthIntent
+import io.bz.domain.state.AuthState
+import kotlinx.coroutines.flow.StateFlow
 
 interface AuthRepository {
+    val state: StateFlow<AuthState>
     suspend fun sendSetTdlibParameters(intent: AuthIntent.SendTDLibParameters): DomainResult<Unit>
     suspend fun sendPhone(phoneNumber: String): DomainResult<Unit>
     suspend fun sendsSMSCode(code: String): DomainResult<Unit>

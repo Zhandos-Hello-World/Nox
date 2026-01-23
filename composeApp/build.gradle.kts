@@ -30,8 +30,14 @@ kotlin {
     
     sourceSets {
         androidMain.dependencies {
+            implementation(project(":domain"))
+            implementation(project(":data"))
+
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation("androidx.core:core-splashscreen:1.2.0")
+            api(project(":tdlib_android"))
+
         }
         commonMain.dependencies {
             implementation(project(":domain"))
@@ -47,9 +53,20 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.kotlinx.coroutinesCore)
 
+            //compose lifecycle
+            implementation("androidx.lifecycle:lifecycle-runtime-compose:2.10.0") // или новее
+            implementation("androidx.lifecycle:lifecycle-viewmodel:2.10.0")
+
+            //coil
+            implementation("com.github.skydoves:landscapist-coil3:2.8.3")
+
             //DI
             implementation(libs.koin.core)
             implementation(libs.koin.compose.viewModel)
+
+            //NAVIGATION 3
+            implementation(libs.jetbrains.navigation3.ui)
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -71,6 +88,7 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+        multiDexEnabled = true
     }
     packaging {
         resources {
@@ -79,6 +97,7 @@ android {
     }
     buildTypes {
         getByName("release") {
+            multiDexEnabled = true
             isMinifyEnabled = false
         }
     }

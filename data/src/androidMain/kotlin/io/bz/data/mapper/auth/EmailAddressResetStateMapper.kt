@@ -1,6 +1,6 @@
 package io.bz.data.mapper.auth
 
-import io.bz.data.lib.TdApi
+import org.drinkless.tdlib.TdApi
 import io.bz.domain.state.AuthState
 
 fun TdApi.EmailAddressResetState.toDomain() : AuthState.WaitEmailCode.EmailAddressResetState {

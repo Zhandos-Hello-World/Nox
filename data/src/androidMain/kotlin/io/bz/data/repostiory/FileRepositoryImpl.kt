@@ -2,14 +2,19 @@ package io.bz.data.repostiory
 
 import io.bz.data.lib.TdClientManager
 import io.bz.data.core.tdLibUnitCall
-import io.bz.data.lib.TdApi
+import org.drinkless.tdlib.TdApi
 import io.bz.domain.core.DomainResult
+import io.bz.domain.model.File
 import io.bz.domain.repository.FileRepository
+import io.bz.domain.stores.FileStore
+import kotlinx.coroutines.flow.Flow
 
 
 class FileRepositoryImpl(
     val clientManager: TdClientManager,
+    val store: FileStore,
 ) : FileRepository {
+    override val files: Flow<List<File>> = store.files
 
     override suspend fun donwloadFile(
         fileId: Int,

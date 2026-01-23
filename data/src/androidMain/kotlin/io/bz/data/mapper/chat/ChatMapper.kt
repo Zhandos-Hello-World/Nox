@@ -1,6 +1,6 @@
 package io.bz.data.mapper.chat
 
-import io.bz.data.lib.TdApi
+import org.drinkless.tdlib.TdApi
 import io.bz.domain.model.chat.BusinessBotManageBar
 import io.bz.domain.model.chat.ChatAvailableReactions
 import io.bz.domain.model.chat.ChatJoinRequestsInfo

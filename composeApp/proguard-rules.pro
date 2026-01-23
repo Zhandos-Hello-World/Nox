@@ -1,0 +1,2 @@
+-keep class io.bz.data.lib.TdClientManager$UpdatesHandler { *; }
+-keep class io.bz.data.lib.TdClientManager { *; }

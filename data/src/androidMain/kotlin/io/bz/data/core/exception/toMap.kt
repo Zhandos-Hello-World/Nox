@@ -1,6 +1,6 @@
 package io.bz.data.core.exception
 
-import io.bz.data.lib.TdApi
+import org.drinkless.tdlib.TdApi
 import io.bz.domain.core.DomainError
 import java.io.IOException
 import kotlin.coroutines.cancellation.CancellationException

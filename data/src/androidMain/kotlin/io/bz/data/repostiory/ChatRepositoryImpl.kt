@@ -2,7 +2,7 @@ package io.bz.data.repostiory
 
 import io.bz.data.lib.TdClientManager
 import io.bz.data.core.tdLibUnitCall
-import io.bz.data.lib.TdApi
+import org.drinkless.tdlib.TdApi
 import io.bz.domain.core.DomainResult
 import io.bz.domain.model.chat.ChatListType
 import io.bz.domain.model.chat.ChatModel

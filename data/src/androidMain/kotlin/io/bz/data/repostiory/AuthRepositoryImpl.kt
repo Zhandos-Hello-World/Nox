@@ -2,15 +2,20 @@ package io.bz.data.repostiory
 
 import io.bz.data.lib.TdClientManager
 import io.bz.data.core.tdLibUnitCall
-import io.bz.data.lib.TdApi
+import org.drinkless.tdlib.TdApi
 import io.bz.domain.core.DomainResult
 import io.bz.domain.interactors.auth.AuthIntent
 import io.bz.domain.repository.AuthRepository
+import io.bz.domain.state.AuthState
+import io.bz.domain.stores.AuthStore
+import kotlinx.coroutines.flow.StateFlow
 
 class AuthRepositoryImpl(
-    val clientManager: TdClientManager,
+    store: AuthStore,
+    private val clientManager: TdClientManager,
 ): AuthRepository {
     val client = clientManager.client
+    override val state: StateFlow<AuthState> = store.state
 
     override suspend fun sendSetTdlibParameters(intent: AuthIntent.SendTDLibParameters): DomainResult<Unit> {
         val appId = 0

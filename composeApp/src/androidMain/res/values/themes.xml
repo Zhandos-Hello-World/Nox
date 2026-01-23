@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Nox" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/purple_200</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_screen_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.Nox.NoActionBar</item>
+    </style>
+
+    <style name="Theme.Nox.NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- ваш дизайн -->
+    </style>
+</resources>

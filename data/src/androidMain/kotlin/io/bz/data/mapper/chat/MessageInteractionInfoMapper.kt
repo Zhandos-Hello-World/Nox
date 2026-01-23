@@ -1,6 +1,6 @@
 package io.bz.data.mapper.chat
 
-import io.bz.data.lib.TdApi
+import org.drinkless.tdlib.TdApi
 import io.bz.domain.model.chat.MessageInteractionInfo
 
 fun TdApi.MessageInteractionInfo.toDomain(): MessageInteractionInfo =

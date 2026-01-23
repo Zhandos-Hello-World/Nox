@@ -2,8 +2,8 @@ package io.bz.data.core
 
 import io.bz.data.core.exception.toException
 import io.bz.data.core.exception.toMap
-import io.bz.data.lib.Client
-import io.bz.data.lib.TdApi
+import org.drinkless.tdlib.Client
+import org.drinkless.tdlib.TdApi
 import io.bz.domain.core.DomainResult
 import kotlinx.coroutines.suspendCancellableCoroutine
 

@@ -1,3 +1,6 @@
+import com.android.builder.dexing.isProguardRule
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
@@ -9,10 +12,16 @@ kotlin {
     // Target declarations - add or remove as needed below. These define
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
+
     androidLibrary {
         namespace = "io.bz.data"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
+
+        isProguardRule("proguard-rules.pro")
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
     }
 
     // For iOS targets, this is also where you should
@@ -50,6 +59,8 @@ kotlin {
     // common to share sources between related targets.
     // See: https://kotlinlang.org/docs/multiplatform-hierarchy.html
     sourceSets {
+
+
         commonMain {
             dependencies {
                 implementation(project(":domain"))
@@ -70,6 +81,7 @@ kotlin {
 
         androidMain {
             dependencies {
+                api(project(":tdlib_android"))
                 implementation(libs.androidx.annotation)
                 // Add Android-specific dependencies here. Note that this source set depends on
                 // commonMain by default and will correctly pull the Android artifacts of any KMP
