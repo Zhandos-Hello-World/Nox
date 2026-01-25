@@ -18,8 +18,8 @@ class AuthRepositoryImpl(
     override val state: StateFlow<AuthState> = store.state
 
     override suspend fun sendSetTdlibParameters(intent: AuthIntent.SendTDLibParameters): DomainResult<Unit> {
-        val appId = 0
-        val appHash = "BuildConfig.API_HASH"
+        val appId = 35865640
+        val appHash = "7540cf3f1b1974d68118bfa0052e62ca"
 
         val parameters = TdApi.SetTdlibParameters(
             intent.useTestServer,

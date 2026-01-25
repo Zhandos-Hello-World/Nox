@@ -1,7 +1,7 @@
 package io.bz.data.core
 
 class TdUpdatesProcessor(
-    private val handlers: List<TdUpdateHandler>,
+    val handlers: List<TdUpdateHandler>,
 ) {
 
     suspend fun onNewUpdates(tdNativeObject: TdNativeObjectWrapper) {

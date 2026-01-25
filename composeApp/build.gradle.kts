@@ -67,6 +67,10 @@ kotlin {
             //NAVIGATION 3
             implementation(libs.jetbrains.navigation3.ui)
 
+            //TIME CONVERTER
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1")
+
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

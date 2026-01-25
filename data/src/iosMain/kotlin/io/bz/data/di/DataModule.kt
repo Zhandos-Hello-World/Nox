@@ -5,14 +5,11 @@ import io.bz.data.core.TdUpdatesProcessor
 import io.bz.data.handlers.AuthUpdateHandler
 import io.bz.data.handlers.ChatUpdateHandler
 import io.bz.data.handlers.UsersUpdateHandler
-import io.bz.data.lib.TdClientManager
-import io.bz.data.mapper.auth.AuthStateMapper
-import io.bz.data.mapper.chat.ChatMapper
-import io.bz.data.mapper.user.UserDtoMapper
-import io.bz.data.repostiory.AuthRepositoryImpl
-import io.bz.data.repostiory.ChatRepositoryImpl
-import io.bz.data.repostiory.FileRepositoryImpl
-import io.bz.data.repostiory.UserRepositoryImpl
+import io.bz.data.lib.FakeTDClientManager
+import io.bz.data.repository.FileRepositoryImpl
+import io.bz.data.repository.UserRepositoryImpl
+import io.bz.data.repository.AuthRepositoryImpl
+import io.bz.data.repository.ChatRepositoryImpl
 import io.bz.domain.repository.AuthRepository
 import io.bz.domain.repository.ChatRepository
 import io.bz.domain.repository.FileRepository
@@ -22,9 +19,9 @@ import org.koin.dsl.module
 
 val dataModule = module {
 
-    single<TdUpdateHandler>(named("auth")) { AuthUpdateHandler(get(), get()) }
-    single<TdUpdateHandler>(named("chat")) { ChatUpdateHandler(get(), get()) }
-    single<TdUpdateHandler>(named("users")) { UsersUpdateHandler(get(), get()) }
+    single<TdUpdateHandler>(named("auth")) { AuthUpdateHandler(get()) }
+    single<TdUpdateHandler>(named("chat")) { ChatUpdateHandler(get()) }
+    single<TdUpdateHandler>(named("users")) { UsersUpdateHandler(get()) }
 
 
     single<TdUpdatesProcessor>(createdAtStart = true) {
@@ -37,43 +34,35 @@ val dataModule = module {
         )
     }
 
-    single {
-        TdClientManager(
-            scope = get(),
-            processor = get(),
-        )
-    }
+    single { FakeTDClientManager(
+        scope = get(),
+        processor = get(),
+    ) }
 
     single<ChatRepository> {
         ChatRepositoryImpl(
-            clientManager = get(),
             store = get(),
+            fileStore = get(),
+            scope = get(),
         )
     }
 
     single<AuthRepository> {
         AuthRepositoryImpl(
-            clientManager = get(),
             store = get(),
         )
     }
 
     single<FileRepository> {
         FileRepositoryImpl(
-            clientManager = get(),
             store = get(),
         )
     }
 
     single<UserRepository> {
         UserRepositoryImpl(
-            tdClientManager = get(),
             userStore = get(),
         )
     }
 
-
-    factory { UserDtoMapper() }
-    factory { AuthStateMapper() }
-    factory { ChatMapper() }
 }

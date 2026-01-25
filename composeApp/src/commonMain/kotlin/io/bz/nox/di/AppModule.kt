@@ -9,3 +9,5 @@ import org.koin.dsl.module
 val appModule = module {
     single { CoroutineScope(SupervisorJob() + Dispatchers.Default) }
 }
+
+expect fun initModules()
