@@ -1,5 +1,6 @@
 package io.bz.data.handlers
 
+import android.util.Log
 import io.bz.data.core.TdNativeObjectWrapper
 import io.bz.data.core.TdUpdateHandler
 import org.drinkless.tdlib.TdApi
@@ -15,6 +16,7 @@ class ChatUpdateHandler(
     override suspend fun handle(wrapper: TdNativeObjectWrapper): Boolean {
         when (val state = wrapper.tdApi) {
             is TdApi.UpdateNewChat -> {
+                Log.d("ChatUpdateHandler", "handle: ${wrapper.tdApi}")
                 val chatModel = mapper.map(state.chat)
                 chatModel!!.let { chatStore.onNewChat(chatModel) }
             }

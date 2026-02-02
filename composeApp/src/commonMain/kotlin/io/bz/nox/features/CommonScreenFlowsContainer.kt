@@ -6,8 +6,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.ui.NavDisplay
+import io.bz.domain.model.chat.ChatModel
 import io.bz.nox.features.auth.presentation.AuthFlow
-import io.bz.nox.features.chats.presentation.list.ChatsListScreenStarter
+import io.bz.nox.features.chat.presentation.ChatScreenStarter
 import io.bz.nox.features.main.presentation.MainScreen
 import io.bz.nox.features.settings.presentation.SettingsFlow
 import io.bz.nox.features.users.presentation.UsersFlow
@@ -17,6 +18,9 @@ sealed interface CommonScreenFlows {
     data object Settings : CommonScreenFlows
     data object Users : CommonScreenFlows
     data object Chats : CommonScreenFlows
+    data class Chat(
+        val model: ChatModel,
+    ) : CommonScreenFlows
     data object Main : CommonScreenFlows
 }
 
@@ -64,16 +68,29 @@ fun CommonScreenFlowsContainer(
                     )
                 }
 
-                is CommonScreenFlows.Chats -> NavEntry(key) {
-                    ChatsListScreenStarter (
-                        modifier = modifier,
-                        flow = { },
-                    )
-                }
+//                is CommonScreenFlows.Chats -> NavEntry(key) {
+//                    ChatsListScreenStarter (
+//                        modifier = modifier,
+//                        flow = {
+//                            backStack.add(it)
+//                            backStack.removeAt(0)
+//                        },
+//                    )
+//                }
                 is CommonScreenFlows.Main -> NavEntry(key) {
                     MainScreen(
                         modifier = modifier,
-                        flow = { },
+                        flow = {
+                            backStack.add(it)
+                        },
+                    )
+                }
+                is CommonScreenFlows.Chat -> NavEntry(key) {
+                    ChatScreenStarter(
+                        modifier = modifier,
+                        flow = {
+                        },
+                        model = key.model,
                     )
                 }
 

@@ -3,6 +3,7 @@ package io.bz.data.repository
 import io.bz.domain.core.DomainResult
 import io.bz.domain.model.chat.ChatListType
 import io.bz.domain.model.chat.ChatModel
+import io.bz.domain.model.chat.Messages
 import io.bz.domain.repository.ChatRepository
 import io.bz.domain.stores.ChatStore
 import io.bz.domain.stores.FileStore
@@ -45,5 +46,15 @@ class ChatRepositoryImpl(
     ): DomainResult<Unit> {
         observeFiles()
         return DomainResult.Success(Unit)
+    }
+
+    override suspend fun loadChatHistory(
+        chatId: Long,
+        fromMessageId: Long,
+        offset: Int,
+        limit: Int,
+        onlyLocal: Boolean,
+    ) : DomainResult<Messages> {
+        TODO("Not yet implemented")
     }
 }

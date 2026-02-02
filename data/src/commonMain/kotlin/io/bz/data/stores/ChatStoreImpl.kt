@@ -73,7 +73,7 @@ class ChatStoreImpl : ChatStore {
         _state.value = chats.values.sortedWith(
             compareByDescending<ChatModel> {
                 // Сначала order из первой позиции, если нет — Long.MIN_VALUE
-                it.positions.firstOrNull()?.order
+                it.lastMessage?.date
             }.thenByDescending {
                 // Если order равен, то сортируем по id
                 it.lastMessage?.date

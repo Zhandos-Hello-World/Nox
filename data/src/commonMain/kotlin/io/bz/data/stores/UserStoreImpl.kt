@@ -12,6 +12,6 @@ class UserStoreImpl() : UserStore {
     override val state: StateFlow<List<User>> = _state.asStateFlow()
 
     override suspend fun updateUser(user: User) {
-        _state.update { it + user }
+        _state.emit(_state.value + user)
     }
 }

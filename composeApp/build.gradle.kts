@@ -70,7 +70,13 @@ kotlin {
             //TIME CONVERTER
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1")
 
+            //CONSTRAINTS
+//            implementation("tech.annexflow.compose:constraintlayout-compose-multiplatform:0.6.1")
+//            implementation("tech.annexflow.compose:constraintlayout-compose-multiplatform:0.6.1-shaded-core")
+//            implementation("tech.annexflow.compose:constraintlayout-compose-multiplatform:0.6.1-shaded")
 
+            //ICONS
+            implementation("org.jetbrains.compose.material:material-icons-core:1.7.3")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

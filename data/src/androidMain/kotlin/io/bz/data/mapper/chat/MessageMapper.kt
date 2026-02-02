@@ -10,11 +10,16 @@ import io.bz.domain.model.chat.MessageContent
 import io.bz.domain.model.chat.MessageReplyTo
 import io.bz.domain.model.chat.MessageSelfDestructType
 import io.bz.domain.model.chat.MessageTopic
+import io.bz.domain.model.chat.Messages
 import io.bz.domain.model.chat.ReplyMarkup
 import io.bz.domain.model.chat.RestrictionInfo
 import io.bz.domain.model.chat.SuggestedPostInfo
 import io.bz.domain.model.chat.UnreadReaction
 
+fun TdApi.Messages.toDomain(): Messages = Messages(
+    totalCount = totalCount,
+    messages = messages.toList().map { it.toDomain() },
+)
 
 fun TdApi.Message.toDomain(): Message = Message(
     id = id,
@@ -134,6 +139,7 @@ fun TdApi.MessageContent.toDomain(): MessageContent = when (this) {
         linkPreview = linkPreview?.toDomain(),
         linkPreviewOptions = linkPreviewOptions?.toDomain()
     )
+    is TdApi.MessageContactRegistered -> MessageContent.MessageContactRegistered
 
     else -> MessageContent.UnSupportedContent(this.javaClass.name)
 }

@@ -39,6 +39,12 @@ suspend fun <T : TdApi.Object> tdLibCall(
     }
 }
 
+suspend fun <FROM, TO> DomainResult<FROM>.tdLibMapper(
+    mapping: (DomainResult<FROM>) -> DomainResult<TO>,
+): DomainResult<TO> {
+    return mapping.invoke(this)
+}
+
 
 suspend fun <T : TdApi.Object> tdLibUnitCall(
     client: Client,

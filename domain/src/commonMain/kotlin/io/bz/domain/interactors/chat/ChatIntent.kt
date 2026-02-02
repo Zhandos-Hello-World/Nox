@@ -9,6 +9,14 @@ sealed interface ChatIntent {
         val limit: Int,
     ): ChatIntent
 
+    data class LoadChatHistory(
+        val chatId: Long,
+        val fromMessageId: Long,
+        val offset: Int,
+        val limit: Int,
+        val onlyLocal: Boolean,
+    ) : ChatIntent
+
     data class LoadDirectMessagesChatTopics(
         val chatID: Int,
         val limit: Int,

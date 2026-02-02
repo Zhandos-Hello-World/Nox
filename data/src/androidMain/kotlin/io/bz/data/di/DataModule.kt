@@ -4,6 +4,7 @@ import io.bz.data.core.TdUpdateHandler
 import io.bz.data.core.TdUpdatesProcessor
 import io.bz.data.handlers.AuthUpdateHandler
 import io.bz.data.handlers.ChatUpdateHandler
+import io.bz.data.handlers.FileUpdateHandler
 import io.bz.data.handlers.UsersUpdateHandler
 import io.bz.data.lib.TdClientManager
 import io.bz.data.mapper.auth.AuthStateMapper
@@ -25,7 +26,7 @@ val dataModule = module {
     single<TdUpdateHandler>(named("auth")) { AuthUpdateHandler(get(), get()) }
     single<TdUpdateHandler>(named("chat")) { ChatUpdateHandler(get(), get()) }
     single<TdUpdateHandler>(named("users")) { UsersUpdateHandler(get(), get()) }
-
+    single<TdUpdateHandler>(named("file")) { FileUpdateHandler(get()) }
 
     single<TdUpdatesProcessor>(createdAtStart = true) {
         TdUpdatesProcessor(
@@ -33,6 +34,7 @@ val dataModule = module {
                 get(named("auth")),
                 get(named("chat")),
                 get(named("users")),
+                get(named("file")),
             ),
         )
     }

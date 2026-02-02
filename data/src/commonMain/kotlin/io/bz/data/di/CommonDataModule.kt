@@ -34,6 +34,7 @@ val commonDataModule = module {
     single<ChatService> {
         ChatServiceImpl(
             repository = get(),
+            fileRepository = get(),
             coroutineScope = get(),
         )
     }
@@ -41,6 +42,7 @@ val commonDataModule = module {
     single<UserService> {
         UserServiceImpl(
             repository = get(),
+            fileRepository = get(),
             coroutineScope = get(),
         )
     }

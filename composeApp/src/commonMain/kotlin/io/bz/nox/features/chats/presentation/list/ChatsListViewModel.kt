@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import io.bz.domain.interactors.chat.ChatIntent
 import io.bz.domain.interactors.chat.ChatService
 import io.bz.domain.model.chat.ChatListType
+import io.bz.domain.model.chat.Messages
 import io.bz.domain.state.ChatState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
@@ -28,7 +29,7 @@ class ChatsListViewModel(
 
     fun getChats() {
         viewModelScope.launch {
-            chatService.sendIntent(
+            chatService.sendIntent<Unit>(
                 ChatIntent.LoadChats(
                     type = ChatListType.Main,
                     limit = 100,

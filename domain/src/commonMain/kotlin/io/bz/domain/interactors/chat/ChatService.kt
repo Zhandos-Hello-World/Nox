@@ -1,10 +1,11 @@
 package io.bz.domain.interactors.chat
 
+import io.bz.domain.core.DomainResult
 import kotlinx.coroutines.flow.StateFlow
 import io.bz.domain.model.chat.ChatModel
 
 interface ChatService {
     val state: StateFlow<LinkedHashMap<Long, ChatModel>>
 
-    suspend fun sendIntent(intent: ChatIntent)
+    suspend fun <T>sendIntent(intent: ChatIntent): DomainResult<T>
 }

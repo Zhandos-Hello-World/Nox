@@ -12,6 +12,6 @@ class FileStoreImpl() : FileStore {
     override val files: StateFlow<List<File>> = _files.asStateFlow()
 
     override suspend fun onNewFile(file: File) {
-        _files.update { it + file }
+        _files.emit(_files.value + file)
     }
 }

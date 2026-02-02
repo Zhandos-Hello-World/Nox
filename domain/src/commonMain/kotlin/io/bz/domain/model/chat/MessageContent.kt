@@ -9,5 +9,7 @@ sealed interface MessageContent {
         val linkPreviewOptions: LinkPreviewOptions?
     ) : MessageContent
 
+    data object MessageContactRegistered : MessageContent
+
     data class UnSupportedContent(val name: String) : MessageContent
 }
