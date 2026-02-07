@@ -1,3 +1,4 @@
 /src/androidMain/javadoc/
 /src/androidMain/jniLibs/
+/native_libs
 /build
