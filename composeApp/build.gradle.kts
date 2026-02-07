@@ -15,14 +15,17 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_17)
         }
     }
-    
-    listOf(
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
+
+    val iosTargets = listOf(iosArm64(), iosSimulatorArm64())
+
+    iosTargets.forEach { target ->
+        target.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            // Если вы хотите вызывать методы TDLib напрямую из Swift кода:
+//            api(project(":data"))
+            // Линкеру всё равно нужно знать, где лежит tdlib
+            linkerOpts("-F${project(":data").projectDir}/native_libs", "-framework", "TDLibFramework")
         }
     }
     

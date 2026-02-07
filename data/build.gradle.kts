@@ -24,32 +24,47 @@ kotlin {
         }
     }
 
-    // For iOS targets, this is also where you should
-    // configure native binary output. For more information, see:
-    // https://kotlinlang.org/docs/multiplatform-build-native-binaries.html#build-xcframeworks
+    val iosTargets = listOf(iosArm64(), iosSimulatorArm64())
 
-    // A step-by-step guide on how to include this library in an XCode
-    // project can be found here:
-    // https://developer.android.com/kotlin/multiplatform/migrate
-    val xcfName = "dataKit"
+    iosTargets.forEach { target ->
+        target.compilations.getByName("main") {
+            val tdlib by cinterops.creating {
+                definitionFile.set(project.file("src/nativeInterop/cinterop/tdlib.def"))
 
-    iosX64 {
-        binaries.framework {
-            baseName = xcfName
+                val xcFrameworkPath = project.file("native_libs/TDLibFramework.xcframework").absolutePath
+
+                // 1. Определяем имя папки архитектуры внутри xcframework
+                val archDir = when (target.name) {
+                    "iosArm64" -> "ios-arm64"
+                    "iosSimulatorArm64" -> "ios-arm64_x86_64-simulator"
+                    else -> "ios-arm64"
+                }
+
+                // 2. Путь к конкретной папке, где лежит .framework
+                // Именно эту папку мы передаем линкеру через -F
+                val frameworkParentDir = "$xcFrameworkPath/$archDir"
+
+                compilerOpts("-F$frameworkParentDir", "-framework", "TDLibFramework")
+            }
+        }
+
+        target.binaries.all {
+            val xcFrameworkPath = project.file("native_libs/TDLibFramework.xcframework").absolutePath
+            val archDir = if (target.name.contains("Simulator")) "ios-arm64_x86_64-simulator" else "ios-arm64"
+            linkerOpts("-F$xcFrameworkPath/$archDir", "-framework", "TDLibFramework")
+            linkerOpts("-lc++")
         }
     }
 
-    iosArm64 {
-        binaries.framework {
-            baseName = xcfName
+    sourceSets {
+        commonMain.dependencies {
+            // общие зависимости
+        }
+
+        val iosMain by creating {
         }
     }
 
-    iosSimulatorArm64 {
-        binaries.framework {
-            baseName = xcfName
-        }
-    }
 
     jvm()
 

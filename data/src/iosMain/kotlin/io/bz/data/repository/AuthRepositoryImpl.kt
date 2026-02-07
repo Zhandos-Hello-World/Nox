@@ -1,5 +1,6 @@
 package io.bz.data.repository
 
+import io.bz.data.TdLibCheck
 import io.bz.domain.core.DomainResult
 import io.bz.domain.interactors.auth.AuthIntent
 import io.bz.domain.repository.AuthRepository
@@ -12,10 +13,14 @@ class AuthRepositoryImpl(
 ): AuthRepository {
     override val state: StateFlow<AuthState> = store.state
 
+    init {
+        val tdlib = TdLibCheck()
+        tdlib.runTest()
+    }
+
     override suspend fun sendSetTdlibParameters(intent: AuthIntent.SendTDLibParameters): DomainResult<Unit> {
         val appId = 0
         val appHash = "BuildConfig.API_HASH"
-
         return DomainResult.Success(Unit)
     }
 

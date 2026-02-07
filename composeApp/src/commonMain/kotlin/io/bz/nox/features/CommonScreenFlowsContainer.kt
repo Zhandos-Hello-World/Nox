@@ -30,7 +30,7 @@ fun CommonScreenFlowsContainer(
     modifier: Modifier = Modifier,
     isSplashScreen: (Boolean) -> Unit,
 ) {
-    val backStack = remember { mutableStateListOf<Any>(CommonScreenFlows.Auth) }
+    val backStack = remember { mutableStateListOf<Any>(CommonScreenFlows.Main) }
 
     NavDisplay(
         backStack = backStack,
