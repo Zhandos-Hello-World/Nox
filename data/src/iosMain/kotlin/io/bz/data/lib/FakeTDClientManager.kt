@@ -38,7 +38,7 @@ class FakeTDClientManager(
                     println("found and changed")
                 }
             }
-            _eventQueue.tryEmit(TdNativeObjectWrapper())
+            _eventQueue.tryEmit(TdNativeObjectWrapper(""))
             delay(1000L)
 
             processor.handlers.forEach { handler ->
@@ -49,7 +49,7 @@ class FakeTDClientManager(
                 }
             }
 
-            _eventQueue.tryEmit(TdNativeObjectWrapper())
+            _eventQueue.tryEmit(TdNativeObjectWrapper(""))
         }
     }
 

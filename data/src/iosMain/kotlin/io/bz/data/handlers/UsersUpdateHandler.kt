@@ -14,7 +14,7 @@ class UsersUpdateHandler(
 ) : TdUpdateHandler {
 
     override suspend fun handle(wrapper: TdNativeObjectWrapper): Boolean {
-        return true
+        return false
     }
 
     suspend fun readyTestUser() {

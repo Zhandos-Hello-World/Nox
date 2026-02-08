@@ -10,6 +10,21 @@ class AuthUpdateHandler(
 ) : TdUpdateHandler {
 
     override suspend fun handle(wrapper: TdNativeObjectWrapper): Boolean {
+        val response = wrapper.jsonResponse
+        when {
+            response.contains("updateAuthorizationState") -> {
+                when {
+                    response.contains("authorizationStateWaitTdlibParameters") -> {
+                        authStore.updateState(AuthState.WaitTDLibParameters)
+                    }
+                    response.contains("authorizationStateWaitPhoneNumber") -> {
+                        authStore.updateState(AuthState.WaitPhoneNumber)
+                    }
+                }
+            }
+            else -> return false
+        }
+
         return true
     }
 

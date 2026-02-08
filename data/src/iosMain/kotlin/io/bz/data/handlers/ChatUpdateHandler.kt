@@ -9,6 +9,6 @@ class ChatUpdateHandler(
 ) : TdUpdateHandler {
 
     override suspend fun handle(wrapper: TdNativeObjectWrapper): Boolean {
-        return true
+        return false
     }
 }

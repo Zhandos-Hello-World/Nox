@@ -5,11 +5,11 @@ import io.bz.data.core.TdUpdatesProcessor
 import io.bz.data.handlers.AuthUpdateHandler
 import io.bz.data.handlers.ChatUpdateHandler
 import io.bz.data.handlers.UsersUpdateHandler
-import io.bz.data.lib.FakeTDClientManager
-import io.bz.data.repository.FileRepositoryImpl
-import io.bz.data.repository.UserRepositoryImpl
+import io.bz.data.lib.TdClientManager
 import io.bz.data.repository.AuthRepositoryImpl
 import io.bz.data.repository.ChatRepositoryImpl
+import io.bz.data.repository.FileRepositoryImpl
+import io.bz.data.repository.UserRepositoryImpl
 import io.bz.domain.repository.AuthRepository
 import io.bz.domain.repository.ChatRepository
 import io.bz.domain.repository.FileRepository
@@ -34,10 +34,12 @@ val dataModule = module {
         )
     }
 
-    single { FakeTDClientManager(
-        scope = get(),
-        processor = get(),
-    ) }
+    single {
+        TdClientManager(
+            scope = get(),
+            processor = get(),
+        )
+    }
 
     single<ChatRepository> {
         ChatRepositoryImpl(
@@ -50,6 +52,7 @@ val dataModule = module {
     single<AuthRepository> {
         AuthRepositoryImpl(
             store = get(),
+            clientManager = get(),
         )
     }
 

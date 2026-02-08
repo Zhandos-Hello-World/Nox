@@ -1,3 +1,3 @@
 package io.bz.data.core
 
-actual class TdNativeObjectWrapper
+actual class TdNativeObjectWrapper(val jsonResponse: String)
