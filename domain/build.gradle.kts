@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
     alias(libs.plugins.androidLint)
+    kotlin("plugin.serialization") version "2.3.0" // или ваша версия Kotlin
 }
 
 kotlin {
@@ -58,6 +59,7 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.kotlinx.coroutinesCore)
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.10.0")
                 // Add KMP dependencies here
             }
         }

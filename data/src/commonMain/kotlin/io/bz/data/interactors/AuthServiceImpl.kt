@@ -23,6 +23,7 @@ class AuthServiceImpl(
                 is AuthIntent.SendLogout -> sendLogout()
                 is AuthIntent.Close -> sendClose()
                 is AuthIntent.RecreateClient -> recreate()
+                is AuthIntent.ResendCode -> resendSmsCode()
             }
         }
     }

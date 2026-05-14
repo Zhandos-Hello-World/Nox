@@ -10,6 +10,8 @@ interface AuthRepository {
     suspend fun sendSetTdlibParameters(intent: AuthIntent.SendTDLibParameters): DomainResult<Unit>
     suspend fun sendPhone(phoneNumber: String): DomainResult<Unit>
     suspend fun sendsSMSCode(code: String): DomainResult<Unit>
+
+    suspend fun resendSmsCode(): DomainResult<Unit>
     suspend fun sendPassword(password: String): DomainResult<Unit>
     suspend fun sendEmail(email: String): DomainResult<Unit>
     suspend fun sendLogout(): DomainResult<Unit>

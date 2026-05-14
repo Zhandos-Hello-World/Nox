@@ -41,7 +41,7 @@ class ChatStoreImpl : ChatStore {
             updatedPositions += position
         }
 
-        chats[chatId] = old.copy(positions = updatedPositions.toTypedArray())
+        chats[chatId] = old.copy(positions = updatedPositions.toList())
         emit()
     }
 

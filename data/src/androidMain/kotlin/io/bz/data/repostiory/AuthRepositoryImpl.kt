@@ -57,6 +57,10 @@ class AuthRepositoryImpl(
         )
     }
 
+    override suspend fun resendSmsCode(): DomainResult<Unit> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun sendPassword(password: String): DomainResult<Unit> {
         return tdLibUnitCall(
             client = client,

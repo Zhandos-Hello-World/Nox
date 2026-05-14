@@ -1,29 +1,29 @@
 package io.bz.data.mapper.auth
 
 import org.drinkless.tdlib.TdApi
-import io.bz.domain.state.AuthState
+import io.bz.domain.state.AuthenticationCodeType
 
-fun TdApi.AuthenticationCodeType.toDomain(): AuthState.WaitCode.AuthenticationCodeType =
+fun TdApi.AuthenticationCodeType.toDomain(): AuthenticationCodeType =
     when (this.getConstructor()) {
         TdApi.AuthenticationCodeTypeTelegramMessage.CONSTRUCTOR ->
-            AuthState.WaitCode.AuthenticationCodeType.TelegramMessage
+            AuthenticationCodeType.TelegramMessage
         TdApi.AuthenticationCodeTypeSms.CONSTRUCTOR ->
-            AuthState.WaitCode.AuthenticationCodeType.Sms
+            AuthenticationCodeType.Sms
         TdApi.AuthenticationCodeTypeSmsWord.CONSTRUCTOR ->
-            AuthState.WaitCode.AuthenticationCodeType.SmsWord
+            AuthenticationCodeType.Sms
         TdApi.AuthenticationCodeTypeSmsPhrase.CONSTRUCTOR ->
-            AuthState.WaitCode.AuthenticationCodeType.SmsPhrase
+            AuthenticationCodeType.Sms
         TdApi.AuthenticationCodeTypeCall.CONSTRUCTOR ->
-            AuthState.WaitCode.AuthenticationCodeType.Call
+            AuthenticationCodeType.Call
         TdApi.AuthenticationCodeTypeFlashCall.CONSTRUCTOR ->
-            AuthState.WaitCode.AuthenticationCodeType.FlashCall
+            AuthenticationCodeType.FlashCall
         TdApi.AuthenticationCodeTypeMissedCall.CONSTRUCTOR ->
-            AuthState.WaitCode.AuthenticationCodeType.MissedCall
+            AuthenticationCodeType.MissedCall
         TdApi.AuthenticationCodeTypeFragment.CONSTRUCTOR ->
-            AuthState.WaitCode.AuthenticationCodeType.Fragment
+            AuthenticationCodeType.Fragment
         TdApi.AuthenticationCodeTypeFirebaseAndroid.CONSTRUCTOR ->
-            AuthState.WaitCode.AuthenticationCodeType.FirebaseAndroid
+            AuthenticationCodeType.FirebaseAndroid
         TdApi.AuthenticationCodeTypeFirebaseIos.CONSTRUCTOR ->
-            AuthState.WaitCode.AuthenticationCodeType.FirebaseIos
+            AuthenticationCodeType.FirebaseIos
         else -> error("Unknown AuthenticationCodeType constructor: ${this.getConstructor()}")
     }

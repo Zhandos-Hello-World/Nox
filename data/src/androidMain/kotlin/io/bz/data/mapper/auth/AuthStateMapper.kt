@@ -2,6 +2,7 @@ package io.bz.data.mapper.auth
 
 import org.drinkless.tdlib.TdApi
 import io.bz.domain.state.AuthState
+import io.bz.domain.state.AuthenticationCodeInfo
 
 class AuthStateMapper {
 
@@ -18,7 +19,7 @@ class AuthStateMapper {
             )
 
             is TdApi.AuthorizationStateWaitCode -> AuthState.WaitCode(
-                codeInfo = AuthState.WaitCode.AuthenticationCodeInfo(
+                codeInfo = AuthenticationCodeInfo(
                     phoneNumber = authState.codeInfo.phoneNumber,
                     type = authState.codeInfo.type.toDomain(),
                     nextType = authState.codeInfo.nextType?.toDomain(),

@@ -95,9 +95,9 @@ fun TdApi.SuggestedPostPrice.toDomain(): SuggestedPostInfo.SuggestedPostPrice = 
 
 
 fun TdApi.SuggestedPostState.toDomain(): SuggestedPostInfo.SuggestedPostState = when (this) {
-    is TdApi.SuggestedPostStatePending -> SuggestedPostInfo.SuggestedPostState.PENDING
-    is TdApi.SuggestedPostStateApproved -> SuggestedPostInfo.SuggestedPostState.APPROVED
-    is TdApi.SuggestedPostStateDeclined -> SuggestedPostInfo.SuggestedPostState.DECLINED
+    is TdApi.SuggestedPostStatePending -> SuggestedPostInfo.SuggestedPostState.Pending
+    is TdApi.SuggestedPostStateApproved -> SuggestedPostInfo.SuggestedPostState.Approved
+    is TdApi.SuggestedPostStateDeclined -> SuggestedPostInfo.SuggestedPostState.Declined
     else -> error("Unknown SuggestedPostState: $this")
 }
 

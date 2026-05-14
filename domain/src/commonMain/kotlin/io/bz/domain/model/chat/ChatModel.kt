@@ -1,129 +1,78 @@
 package io.bz.domain.model.chat
 
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+
+@Serializable
 data class ChatModel(
-    /** Chat unique identifier. */
-    val id: Long,
+    @SerialName("id") val id: Long,
+    @SerialName("type") val type: ChatType,
+    @SerialName("title") val title: String,
+    @SerialName("photo") val photo: ChatPhotoInfo? = null,
+    @SerialName("accent_color_id") val accentColorId: Int,
+    @SerialName("background_custom_emoji_id") val backgroundCustomEmojiId: Long,
+    @SerialName("profile_accent_color_id") val profileAccentColorId: Int,
+    @SerialName("profile_background_custom_emoji_id") val profileBackgroundCustomEmojiId: Long,
+    @SerialName("permissions") val permissions: ChatPermissions,
+    @SerialName("last_message") val lastMessage: Message? = null,
+    @SerialName("upgraded_gift_colors") val upgradedGiftColors: UpgradedGiftColors? = null,
 
-    /** Type of the chat. */
-    val type: ChatType,
+    // Используй List вместо Array для лучшей совместимости в KMP
+    @SerialName("positions") val positions: List<ChatPosition> = emptyList(),
 
-    /** Chat title. */
-    val title: String,
+    @SerialName("chat_lists") val chatListTypes: List<ChatListType> = emptyList(),
 
-    /** Chat photo; may be null. */
-    val photo: ChatPhotoInfo?,
+    @SerialName("message_sender_id") val messageSenderId: Message.MessageSender? = null,
 
-    /** Identifier of the accent color for message sender name, and backgrounds of chat photo, reply header, and link preview. */
-    val accentColorId: Int,
+    @SerialName("has_protected_content") val hasProtectedContent: Boolean,
 
-    /** Identifier of a custom emoji to be shown on the reply header and link preview background for messages sent by the chat; 0 if none. */
-    val backgroundCustomEmojiId: Long,
+    @SerialName("is_translatable") val isTranslatable: Boolean,
 
-    /** Color scheme based on an upgraded gift; may be null if none. */
-    val upgradedGiftColors: UpgradedGiftColors?,
+    @SerialName("is_marked_as_unread") val isMarkedAsUnread: Boolean,
 
-    /** Identifier of the profile accent color for the chat's profile; -1 if none. */
-    val profileAccentColorId: Int,
+    @SerialName("view_as_topics") val viewAsTopics: Boolean,
 
-    /** Identifier of a custom emoji to be shown on the background of the chat's profile; 0 if none. */
-    val profileBackgroundCustomEmojiId: Long,
+    @SerialName("has_scheduled_messages") val hasScheduledMessages: Boolean,
 
-    /** Actions that non-administrator chat members are allowed to take in the chat. */
-    val permissions: ChatPermissions,
+    @SerialName("can_be_deleted_only_for_self") val canBeDeletedOnlyForSelf: Boolean,
 
-    /** Last message in the chat; may be null if none or unknown. */
-    val lastMessage: Message?,
+    @SerialName("can_be_deleted_for_all_users") val canBeDeletedForAllUsers: Boolean,
 
-    /** Positions of the chat in chat lists. */
-    val positions: Array<ChatPosition>,
+    @SerialName("can_be_reported") val canBeReported: Boolean,
 
-    /** Chat lists to which the chat belongs. */
-    val chatListTypes: Array<ChatListType>,
+    @SerialName("default_disable_notification") val defaultDisableNotification: Boolean,
 
-    /** Identifier of a user or chat that is selected to send messages in the chat; may be null. */
-    val messageSenderId: Message.MessageSender?,
+    @SerialName("unread_count") val unreadCount: Int,
 
-    /** Block list to which the chat is added; may be null if none. */
-//    val blockList: BlockList?,
+    @SerialName("last_read_inbox_message_id") val lastReadInboxMessageId: Long,
 
-    /** True, if chat content can't be saved locally, forwarded, or copied. */
-    val hasProtectedContent: Boolean,
+    @SerialName("last_read_outbox_message_id") val lastReadOutboxMessageId: Long,
 
-    /** True, if translation of all messages in the chat must be suggested to the user. */
-    val isTranslatable: Boolean,
+    @SerialName("unread_mention_count") val unreadMentionCount: Int,
 
-    /** True, if the chat is marked as unread. */
-    val isMarkedAsUnread: Boolean,
+    @SerialName("unread_reaction_count") val unreadReactionCount: Int,
 
-    /** True, if the chat must be shown in the "View as topics" mode. */
-    val viewAsTopics: Boolean,
+    @SerialName("notification_settings") val notificationSettings: ChatNotificationSettings,
 
-    /** True, if the chat has scheduled messages. */
-    val hasScheduledMessages: Boolean,
+    @SerialName("available_reactions") val availableReactions: ChatAvailableReactions,
 
-    /** True, if messages can be deleted only for the current user. */
-    val canBeDeletedOnlyForSelf: Boolean,
+    @SerialName("message_auto_delete_time") val messageAutoDeleteTime: Int,
 
-    /** True, if messages can be deleted for all users. */
-    val canBeDeletedForAllUsers: Boolean,
+//    @SerialName("emoji_status") val emojiStatus: EmojiStatus? = null,
 
-    /** True, if the chat can be reported. */
-    val canBeReported: Boolean,
+//    @SerialName("background") val background: ChatBackground? = null,
 
-    /** Default value of the disableNotification parameter. */
-    val defaultDisableNotification: Boolean,
+//    @SerialName("theme") val theme: ChatTheme? = null,
 
-    /** Number of unread messages in the chat. */
-    val unreadCount: Int,
+    @SerialName("action_bar") val actionBar: ChatActionBar? = null,
 
-    /** Identifier of the last read incoming message. */
-    val lastReadInboxMessageId: Long,
+    @SerialName("business_bot_manage_bar") val businessBotManageBar: BusinessBotManageBar? = null,
 
-    /** Identifier of the last read outgoing message. */
-    val lastReadOutboxMessageId: Long,
+    @SerialName("video_chat") val videoChat: VideoChat,
 
-    /** Number of unread messages with a mention/reply. */
-    val unreadMentionCount: Int,
+    @SerialName("pending_join_requests") val pendingJoinRequests: ChatJoinRequestsInfo? = null,
 
-    /** Number of messages with unread reactions. */
-    val unreadReactionCount: Int,
+    @SerialName("reply_markup_message_id") val replyMarkupMessageId: Long,
 
-    /** Notification settings for the chat. */
-    val notificationSettings: ChatNotificationSettings,
-
-    /** Types of reaction available in the chat. */
-    val availableReactions: ChatAvailableReactions,
-
-    /** Message auto-delete or self-destruct timer (seconds). */
-    val messageAutoDeleteTime: Int,
-
-    /** Emoji status; may be null. */
-    val emojiStatus: EmojiStatus?,
-
-    /** Background set for the chat; may be null. */
-    val background: ChatBackground?,
-
-    /** Theme set for the chat; may be null. */
-    val theme: ChatTheme?,
-
-    /** Chat action bar; may be null. */
-    val actionBar: ChatActionBar?,
-
-    /** Business bot manage bar; may be null. */
-    val businessBotManageBar: BusinessBotManageBar?,
-
-    /** Information about video chat of the chat. */
-    val videoChat: VideoChat,
-
-    /** Information about pending join requests; may be null. */
-    val pendingJoinRequests: ChatJoinRequestsInfo?,
-
-    /** Identifier of the message with default reply markup. */
-    val replyMarkupMessageId: Long,
-
-    /** Draft message; may be null. */
-//    val draftMessage: DraftMessage?,
-
-    /** Application-specific client data. */
-    val clientData: String
+    @SerialName("client_data") val clientData: String = ""
 )

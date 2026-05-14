@@ -13,6 +13,8 @@ import io.bz.domain.model.chat.Message
 import io.bz.domain.model.chat.Messages
 import io.bz.domain.repository.ChatRepository
 import io.bz.domain.stores.ChatStore
+import io.bz.domain.stores.FileStore
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 
 class ChatRepositoryImpl(

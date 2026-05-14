@@ -12,10 +12,10 @@ import io.bz.domain.model.chat.FactCheck
 import io.bz.domain.model.chat.MessageForwardInfo
 
 fun TdApi.ChatType.toDomain(): ChatType = when (this) {
-    is TdApi.ChatTypePrivate -> ChatType.PRIVATE
-    is TdApi.ChatTypeBasicGroup -> ChatType.BASIC_GROUP
-    is TdApi.ChatTypeSupergroup -> ChatType.SUPERGROUP
-    is TdApi.ChatTypeSecret -> ChatType.SECRET
+    is TdApi.ChatTypePrivate -> ChatType.Private
+    is TdApi.ChatTypeBasicGroup -> ChatType.BasicGroup
+    is TdApi.ChatTypeSupergroup -> ChatType.Supergroup
+    is TdApi.ChatTypeSecret -> ChatType.Secret
     else -> throw IllegalArgumentException("Unknown type")
 }
 
@@ -48,7 +48,7 @@ fun TdApi.ChatPermissions.toDomain(): ChatPermissions {
     if (canSendVoiceNotes) perms += ChatPermission.SEND_VOICE_NOTES
     if (canSendPolls) perms += ChatPermission.SEND_POLLS
     if (canSendOtherMessages) perms += ChatPermission.SEND_OTHER_MESSAGES
-    if (canAddLinkPreviews) perms += ChatPermission.ADD_LINK_PREVIEWS
+    if (canAddLinkPreviews) perms += ChatPermission.SEND_LINK_PREVIEWS
     if (canChangeInfo) perms += ChatPermission.CHANGE_INFO
     if (canInviteUsers) perms += ChatPermission.INVITE_USERS
     if (canPinMessages) perms += ChatPermission.PIN_MESSAGES
@@ -90,7 +90,9 @@ fun TdApi.MessageSchedulingState.toDomain(): Message.MessageSchedulingState =
             )
 
         is TdApi.MessageSchedulingStateSendWhenOnline ->
-            Message.MessageSchedulingState.SendWhenOnline
+            Message.MessageSchedulingState.SendWhenOnline(
+
+            )
 
         is TdApi.MessageSchedulingStateSendWhenVideoProcessed ->
             Message.MessageSchedulingState.SendWhenVideoProcessed(

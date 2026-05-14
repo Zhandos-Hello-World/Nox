@@ -1,7 +1,10 @@
 package io.bz.domain.state
 
 import io.bz.domain.model.FormattedText
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 sealed interface AuthState {
 
     data object None: AuthState
@@ -9,11 +12,14 @@ sealed interface AuthState {
     /**
      * Initialization parameters are needed. Call setTdlibParameters to provide them.
      */
+    @Serializable
+    @SerialName("authorizationStateWaitTdlibParameters")
     data object WaitTDLibParameters: AuthState
 
     /**
      * TDLib needs the user's phone number to authorize. Call setAuthenticationPhoneNumber to provide the phone number, or use requestQrCodeAuthentication or checkAuthenticationBotToken for other authentication options.
      */
+    @Serializable @SerialName("authorizationStateWaitPhoneNumber")
     data object WaitPhoneNumber: AuthState
 
     /**
@@ -25,31 +31,12 @@ sealed interface AuthState {
     /**
      * TDLib needs the user's authentication code to authorize. Call checkAuthenticationCode to check the code.
      */
+    @Serializable
+    @SerialName("authorizationStateWaitCode")
     data class WaitCode(
+        @SerialName("code_info")
         val codeInfo: AuthenticationCodeInfo,
-    ): AuthState {
-
-        data class AuthenticationCodeInfo(
-            val phoneNumber: String,
-            val type: AuthenticationCodeType,
-            val nextType: AuthenticationCodeType?,
-            val timeout: Int,
-        )
-
-        sealed interface AuthenticationCodeType {
-            data object TelegramMessage : AuthenticationCodeType
-            data object Sms : AuthenticationCodeType
-            data object SmsWord : AuthenticationCodeType
-            data object SmsPhrase : AuthenticationCodeType
-            data object Call : AuthenticationCodeType
-            data object FlashCall : AuthenticationCodeType
-            data object MissedCall : AuthenticationCodeType
-            data object Fragment : AuthenticationCodeType
-            data object FirebaseAndroid : AuthenticationCodeType
-            data object FirebaseIos : AuthenticationCodeType
-        }
-
-    }
+    ): AuthState
     /**
      * The user is unregistered and need to accept terms of service and enter their first name and last name to finish registration. Call registerUser to accept the terms of service and provide the data.
      */
@@ -66,15 +53,23 @@ sealed interface AuthState {
     /**
      * The user has been authorized, but needs to enter a 2-step verification password to start using the application. Call checkAuthenticationPassword to provide the password, or requestAuthenticationPasswordRecovery to recover the password, or deleteAccount to delete the account after a week.
      */
+    @Serializable
+    @SerialName("authorizationStateWaitPassword")
     data class WaitPassword(
+        @SerialName("password_hint")
         val passwordHint: String,
+        @SerialName("has_recovery_email_address")
         val hasRecoveryEmailAddress: Boolean,
+        @SerialName("has_passport_data")
         val hasPassportData: Boolean,
+        @SerialName("recovery_email_address_pattern")
         val recoveryEmailAddressPattern: String,
     ): AuthState
     /**
      * The user has been successfully authorized. TDLib is now ready to answer general requests.
      */
+    @Serializable
+    @SerialName("authorizationStateReady")
     data object Ready: AuthState
     /**
      * The user is currently logging out.
@@ -123,4 +118,56 @@ sealed interface AuthState {
             data class EmailAddressResetStatePending(val resetIn: Int) : EmailAddressResetState
         }
     }
+}
+
+@Serializable
+data class AuthenticationCodeInfo(
+    @SerialName("phone_number")
+    val phoneNumber: String,
+    val type: AuthenticationCodeType,
+    @SerialName("next_type")
+    val nextType: AuthenticationCodeType? = null,
+    val timeout: Int,
+)
+@Serializable
+sealed interface AuthenticationCodeType {
+    @Serializable
+    @SerialName("authenticationCodeTypeTelegramMessage")
+    data object TelegramMessage : AuthenticationCodeType
+
+    @Serializable
+    @SerialName("authenticationCodeTypeSms")
+    data object Sms : AuthenticationCodeType
+
+    @Serializable
+    @SerialName("authenticationCodeTypeSmsWord")
+    data object SmsWord : AuthenticationCodeType
+
+    @Serializable
+    @SerialName("authenticationCodeTypeSmsPhrase")
+    data object SmsPhrase : AuthenticationCodeType
+
+    @Serializable
+    @SerialName("authenticationCodeTypeCall")
+    data object Call : AuthenticationCodeType
+
+    @Serializable
+    @SerialName("authenticationCodeTypeFlashCall")
+    data object FlashCall : AuthenticationCodeType
+
+    @Serializable
+    @SerialName("authenticationCodeTypeMissedCall")
+    data object MissedCall : AuthenticationCodeType
+
+    @Serializable
+    @SerialName("authenticationCodeTypeFragment")
+    data object Fragment : AuthenticationCodeType
+
+    @Serializable
+    @SerialName("authenticationCodeTypeFirebaseAndroid")
+    data object FirebaseAndroid : AuthenticationCodeType
+
+    @Serializable
+    @SerialName("authenticationCodeTypeFirebaseIos")
+    data object FirebaseIos : AuthenticationCodeType
 }

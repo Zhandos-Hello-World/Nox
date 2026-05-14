@@ -20,6 +20,7 @@ sealed interface AuthIntent {
     data class SendPassword(val password: String) : AuthIntent
     data class SendEmail(val email: String) : AuthIntent
     data object SendLogout : AuthIntent
+    data object ResendCode : AuthIntent
     data object Close : AuthIntent
     data object RecreateClient : AuthIntent
 }

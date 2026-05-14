@@ -1,55 +1,66 @@
 package io.bz.domain.model.chat
 
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.json.JsonClassDiscriminator
+
+@Serializable
 data class MessageInteractionInfo(
-    val viewCount: Int,
-    val forwardCount: Int,
-    val replyInfo: MessageReplyInfo?,
-    val reactions: Reactions?
+    @SerialName("view_count") val viewCount: Int,
+    @SerialName("forward_count") val forwardCount: Int,
+    @SerialName("reply_info") val replyInfo: MessageReplyInfo? = null,
+    @SerialName("reactions") val reactions: Reactions? = null
 ) {
+    @Serializable
     data class MessageReplyInfo(
-        val replyCount: Int,
-        val recentReplierIds: List<Message.MessageSender>,
-        val lastReadInboxMessageId: Long,
-        val lastReadOutboxMessageId: Long,
-        val lastMessageId: Long
+        @SerialName("reply_count") val replyCount: Int,
+        @SerialName("recent_replier_ids") val recentReplierIds: List<Message.MessageSender> = emptyList(),
+        @SerialName("last_read_inbox_message_id") val lastReadInboxMessageId: Long,
+        @SerialName("last_read_outbox_message_id") val lastReadOutboxMessageId: Long,
+        @SerialName("last_message_id") val lastMessageId: Long
     )
 
+    @Serializable
     data class Reactions(
-        val reactions: List<MessageReaction>,
-        val areTags: Boolean,
-        val paidReactors: List<PaidReactor>,
-        val canGetAddedReactions: Boolean
+        @SerialName("reactions") val reactions: List<MessageReaction> = emptyList(),
+        @SerialName("are_tags") val areTags: Boolean,
+        @SerialName("paid_reactors") val paidReactors: List<PaidReactor> = emptyList(),
+        @SerialName("can_get_added_reactions") val canGetAddedReactions: Boolean
     ) {
-
+        @Serializable
         data class PaidReactor(
-            val senderId: Message.MessageSender?,
-            val starCount: Long,
-            val isTop: Boolean,
-            val isMe: Boolean,
-            val isAnonymous: Boolean
+            @SerialName("sender_id") val senderId: Message.MessageSender? = null,
+            @SerialName("star_count") val starCount: Long,
+            @SerialName("is_top") val isTop: Boolean,
+            @SerialName("is_me") val isMe: Boolean,
+            @SerialName("is_anonymous") val isAnonymous: Boolean
         )
+    }
 
 
-        data class MessageReaction(
-            val type: ReactionType,
-            val totalCount: Int,
-            val isChosen: Boolean,
-            val usedSenderId: Message.MessageSender?,
-            val recentSenderIds: List<Message.MessageSender>
-        ) {
-            sealed interface ReactionType {
+    @Serializable
+    data class MessageReaction(
+        @SerialName("type") val type: ReactionType,
+        @SerialName("total_count") val totalCount: Int,
+        @SerialName("is_chosen") val isChosen: Boolean,
+        @SerialName("used_sender_id") val usedSenderId: Message.MessageSender? = null,
+        @SerialName("recent_sender_ids") val recentSenderIds: List<Message.MessageSender> = emptyList()
+    ) {
+        @Serializable
+        @JsonClassDiscriminator("@type")
+        sealed interface ReactionType {
 
-                data class Emoji(
-                    val emoji: String
-                ) : ReactionType
+            @Serializable
+            @SerialName("reactionTypeEmoji")
+            data class Emoji(@SerialName("emoji") val emoji: String) : ReactionType
 
-                data class CustomEmoji(
-                    val customEmojiId: Long
-                ) : ReactionType
+            @Serializable
+            @SerialName("reactionTypeCustomEmoji")
+            data class CustomEmoji(@SerialName("custom_emoji_id") val customEmojiId: Long) : ReactionType
 
-                object Paid : ReactionType
-            }
-
+            @Serializable
+            @SerialName("reactionTypePaid")
+            data object Paid : ReactionType
         }
     }
 

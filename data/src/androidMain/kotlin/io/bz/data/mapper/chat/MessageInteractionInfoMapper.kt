@@ -29,8 +29,8 @@ fun TdApi.MessageReactions.toDomain(): MessageInteractionInfo.Reactions =
         canGetAddedReactions = canGetAddedReactions
     )
 
-fun TdApi.MessageReaction.toDomain(): MessageInteractionInfo.Reactions.MessageReaction =
-    MessageInteractionInfo.Reactions.MessageReaction(
+fun TdApi.MessageReaction.toDomain(): MessageInteractionInfo.MessageReaction =
+    MessageInteractionInfo.MessageReaction(
         type = type.toDomain(),
         totalCount = totalCount,
         isChosen = isChosen,
@@ -38,16 +38,16 @@ fun TdApi.MessageReaction.toDomain(): MessageInteractionInfo.Reactions.MessageRe
         recentSenderIds = recentSenderIds.map { it.toDomain() }
     )
 
-fun TdApi.ReactionType.toDomain(): MessageInteractionInfo.Reactions.MessageReaction.ReactionType =
+fun TdApi.ReactionType.toDomain(): MessageInteractionInfo.MessageReaction.ReactionType =
     when (this) {
         is TdApi.ReactionTypeEmoji ->
-            MessageInteractionInfo.Reactions.MessageReaction.ReactionType.Emoji(emoji)
+            MessageInteractionInfo.MessageReaction.ReactionType.Emoji(emoji)
 
         is TdApi.ReactionTypeCustomEmoji ->
-            MessageInteractionInfo.Reactions.MessageReaction.ReactionType.CustomEmoji(customEmojiId)
+            MessageInteractionInfo.MessageReaction.ReactionType.CustomEmoji(customEmojiId)
 
         is TdApi.ReactionTypePaid ->
-            MessageInteractionInfo.Reactions.MessageReaction.ReactionType.Paid
+            MessageInteractionInfo.MessageReaction.ReactionType.Paid
 
         else -> error("Unknown ReactionType: $this")
     }

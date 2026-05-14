@@ -43,9 +43,8 @@ val dataModule = module {
 
     single<ChatRepository> {
         ChatRepositoryImpl(
+            clientManager = get(),
             store = get(),
-            fileStore = get(),
-            scope = get(),
         )
     }
 
@@ -59,12 +58,14 @@ val dataModule = module {
     single<FileRepository> {
         FileRepositoryImpl(
             store = get(),
+            clientManager = get(),
         )
     }
 
     single<UserRepository> {
         UserRepositoryImpl(
             userStore = get(),
+            clientManager = get(),
         )
     }
 

@@ -23,6 +23,9 @@ fun SmsScreenStarter(
     val viewModel: SmsViewModel = koinViewModel<SmsViewModel>()
 
     val state by viewModel.uiState.collectAsState()
+    val canResend by viewModel.canResendCode.collectAsState()
+    val secondsLeft by viewModel.timerSeconds.collectAsState()
+
 
     SmsScreen(
         modifier = modifier,
@@ -31,6 +34,11 @@ fun SmsScreenStarter(
         onNextClicked = {
             viewModel.onNextClicked()
         },
+        canResend = canResend,
+        secondsLeft = secondsLeft,
+        onResendClick = {
+            viewModel.resendCodeViaSms()
+        }
     )
 
 }
@@ -42,6 +50,9 @@ private fun SmsScreen(
     state: SmsUIState,
     onValueChanged: (String) -> Unit,
     onNextClicked: () -> Unit,
+    canResend: Boolean,
+    secondsLeft: Int,
+    onResendClick: () -> Unit,
 ) {
 
     Column(modifier = modifier) {
@@ -66,6 +77,20 @@ private fun SmsScreen(
             },
         )
 
+
+
+        if (canResend) {
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = onResendClick,
+                content = {
+                    Text(text = "Resend Code")
+                },
+            )
+        } else {
+            Text("Повторный запрос через $secondsLeft сек.")
+        }
+
     }
 }
 
@@ -78,6 +103,9 @@ private fun SmsScreenPreview() {
             state = SmsUIState("32"),
             onValueChanged = { },
             onNextClicked = { },
+            canResend = false,
+            secondsLeft = 30,
+            onResendClick = { },
         )
     }
 }

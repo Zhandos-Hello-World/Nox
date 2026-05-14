@@ -15,7 +15,7 @@ import platform.Foundation.NSUserDomainMask
 class AuthRepositoryImpl(
     store: AuthStore,
     private val clientManager: TdClientManager,
-): AuthRepository {
+) : AuthRepository {
     override val state: StateFlow<AuthState> = store.state
 
 
@@ -25,95 +25,100 @@ class AuthRepositoryImpl(
         // Путь к базе данных (на iOS это обычно папка Documents)
 
         val fileManager = NSFileManager.defaultManager
-        val documentsUrl = fileManager.URLsForDirectory(NSDocumentDirectory, NSUserDomainMask).first() as NSURL
-        val documentsPath = documentsUrl.path ?: "tdlib"
-        val databasePath = "$documentsPath/tdlib_db"
+        val documentsUrl =
+            fileManager.URLsForDirectory(NSDocumentDirectory, NSUserDomainMask).first() as NSURL
+        val documentsPath = documentsUrl.path ?: "tdlib3"
+        val databasePath = "$documentsPath/tdlib_db3"
+
+        val filesPath = "$documentsPath/tdlib_files3" // Отдельная папка для файлов
 
         val jsonQuery = """
         {
           "@type": "setTdlibParameters",
           "database_directory": "$databasePath",
+          "files_directory": "$filesPath",
+          "use_file_database": true,
+          "use_chat_info_database": true,
           "use_message_database": true,
           "use_secret_chats": true,
+          "use_test_dc": false,
           "api_id": $appId,
           "api_hash": "$appHash",
           "system_language_code": "en",
-          "device_model": "iPhone",
-          "application_version": "1.0"
+          "device_model": "iPhone 13 Pro Max",
+          "system_version": "17.4",
+          "application_version": "1.0.6",
+          "enable_storage_optimizer": true
         }
-    """.trimIndent()
-
-        clientManager.send(jsonQuery)
-
-        return DomainResult.Success(Unit)
+        """.trimIndent()
+        return clientManager.send(jsonQuery)
     }
 
     override suspend fun sendPhone(phoneNumber: String): DomainResult<Unit> {
-        val json = """
+        val jsonQuery = """
         {
             "@type": "setAuthenticationPhoneNumber",
             "phone_number": "$phoneNumber"
         }
-    """.trimIndent()
-        clientManager.send(json)
-        return DomainResult.Success(Unit)
+        """.trimIndent()
+        return clientManager.send(jsonQuery)
     }
 
     override suspend fun sendsSMSCode(code: String): DomainResult<Unit> {
-        val json = """
+        val jsonQuery = """
         {
             "@type": "checkAuthenticationCode",
             "code": "$code"
         }
-    """.trimIndent()
-        clientManager.send(json)
-        return DomainResult.Success(Unit)
+        """.trimIndent()
+        return clientManager.send(jsonQuery)
     }
 
     override suspend fun sendPassword(password: String): DomainResult<Unit> {
-        val json = """
+        val jsonQuery = """
         {
             "@type": "checkAuthenticationPassword",
             "password": "$password"
         }
-    """.trimIndent()
-        clientManager.send(json)
-        return DomainResult.Success(Unit)
+        """.trimIndent()
+        return clientManager.send(jsonQuery)
     }
 
     override suspend fun sendEmail(email: String): DomainResult<Unit> {
-        val json = """
+        val jsonQuery = """
         {
             "@type": "setAuthenticationEmailAddress",
             "email_address": "$email"
         }
-    """.trimIndent()
-        clientManager.send(json)
-        return DomainResult.Success(Unit)
+        """.trimIndent()
+        return clientManager.send(jsonQuery)
     }
 
     override suspend fun sendLogout(): DomainResult<Unit> {
-        val json = """
+        val jsonQuery = """
         {
             "@type": "logOut"
         }
-    """.trimIndent()
-        clientManager.send(json)
-        return DomainResult.Success(Unit)
+        """.trimIndent()
+        return clientManager.send(jsonQuery)
     }
 
     override suspend fun sendClose(): DomainResult<Unit> {
-        val json = """
+        val jsonQuery = """
         {
             "@type": "close"
         }
-    """.trimIndent()
-        clientManager.send(json)
-        return DomainResult.Success(Unit)
+        """.trimIndent()
+        return clientManager.send(jsonQuery)
     }
 
     override suspend fun recreate(): DomainResult<Unit> {
         clientManager.recreateClient()
         return DomainResult.Success(Unit)
     }
+
+    override suspend fun resendSmsCode(): DomainResult<Unit> {
+        TODO("Not yet implemented")
+    }
+
 }

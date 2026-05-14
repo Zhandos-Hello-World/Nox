@@ -111,7 +111,7 @@ fun ChatItem(message: Message) {
 
                 is MessageContent.UnSupportedContent -> {
                     Text(
-                        text = content.name,
+                        text = content.rawJson.toString(),
                         color = MaterialTheme.colorScheme.error,
                     )
                 }

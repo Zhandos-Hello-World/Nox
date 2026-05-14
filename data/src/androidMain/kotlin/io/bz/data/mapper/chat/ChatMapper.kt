@@ -37,8 +37,8 @@ fun TdApi.Chat.toDomain(): ChatModel = ChatModel(
     profileBackgroundCustomEmojiId = profileBackgroundCustomEmojiId,
     permissions = permissions.toDomain(),
     lastMessage = lastMessage?.toDomain(),
-    positions = positions.map { it.toDomain() }.toTypedArray(),
-    chatListTypes = chatLists.map { it.toDomain() }.toTypedArray(),
+    positions = positions.map { it.toDomain() }.toList(),
+    chatListTypes = chatLists.map { it.toDomain() }.toList(),
     messageSenderId = messageSenderId?.toDomain(),
     hasProtectedContent = hasProtectedContent,
     isTranslatable = isTranslatable,
@@ -60,8 +60,8 @@ fun TdApi.Chat.toDomain(): ChatModel = ChatModel(
     emojiStatus = emojiStatus?.toDomain(),
     replyMarkupMessageId = replyMarkupMessageId,
     clientData = clientData,
-    background = background?.toDomain(),
-    theme = theme?.toDomain(),
+//    background = background?.toDomain(),
+//    theme = theme?.toDomain(),
     businessBotManageBar = businessBotManageBar?.toDomain(),
     actionBar = actionBar?.toDomain(),
     videoChat = videoChat.toDomain(),
@@ -127,11 +127,11 @@ fun TdApi.ChatNotificationSettings.toDomain(): ChatNotificationSettings = ChatNo
 )
 
 fun TdApi.ChatAvailableReactions.toDomain(): ChatAvailableReactions = when (this) {
-    is TdApi.ChatAvailableReactionsAll -> ChatAvailableReactions.ChatAvailableReactionsAll(
+    is TdApi.ChatAvailableReactionsAll -> ChatAvailableReactions.All(
         maxReactionCount = maxReactionCount
     )
 
-    is TdApi.ChatAvailableReactionsSome -> ChatAvailableReactions.ChatAvailableReactionsSome(
+    is TdApi.ChatAvailableReactionsSome -> ChatAvailableReactions.Some(
         reactions = reactions.map { it.toDomain() }, maxReactionCount = maxReactionCount
     )
 
